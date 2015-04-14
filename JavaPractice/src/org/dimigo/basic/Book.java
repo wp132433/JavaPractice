@@ -6,6 +6,15 @@ public class Book {
 	private String author = "윤태희";
 	private int page_cnt = 1000;
 	
+	public Book() {
+		
+	}
+	
+	public Book(String _title, String _author, int _page_cnt) {
+		title = _title;
+		author = _author;
+		_page_cnt = page_cnt;
+	}
 	
 	public String getTitle() {
 		return title;
