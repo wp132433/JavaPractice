@@ -3,6 +3,7 @@ package org.dimigo.basic;
 import java.util.Scanner;
 
 public class While {
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int menu;

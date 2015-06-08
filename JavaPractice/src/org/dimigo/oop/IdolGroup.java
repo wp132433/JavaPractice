@@ -9,6 +9,7 @@ public class IdolGroup {
 								{"cl", "chip dara bac", "bac spring", "min mouse"},
 								{"u ra", "he ri", "cow zin", "min a"}				};
 		
+		
 		int i = 0;
 		
 		for(String group_name : idol_group_names) {
@@ -18,5 +19,8 @@ public class IdolGroup {
 			}
 			i++;
 		}
+		System.out.println();
+		
 	}
+	
 }

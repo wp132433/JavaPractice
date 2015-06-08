@@ -3,6 +3,7 @@ package org.dimigo.oop;
 import java.util.Scanner;
 
 public class Score {
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		StringBuffer sb = new StringBuffer();
 		Scanner scanner = new Scanner(System.in);

@@ -16,6 +16,7 @@ public class Question {
 		"6"
 	};
 	
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		
