@@ -4,6 +4,7 @@ public class Calculator2 {
 	private int num1;
 	private int num2;
 	private boolean isOn = false;
+	private static double PI = 3.141592;
 
 	public Calculator2(int num1, int num2) {
 		this.num1 = num1;
@@ -42,6 +43,30 @@ public class Calculator2 {
 	}
 
 	public static double div(Calculator2 self, int num1, int num2) {
+		if (!self.isOn)
+			self.powerOn();
+		return num1 / (double) num2;
+	}
+	
+	public static double add(Calculator2 self, double num1, double num2) {
+		if (!self.isOn)
+			self.powerOn();
+		return num1 + num2;
+	}
+
+	public static double sub(Calculator2 self, double num1, double num2) {
+		if (!self.isOn)
+			self.powerOn();
+		return num1 - num2;
+	}
+
+	public static double mul(Calculator2 self, double num1, double num2) {
+		if (!self.isOn)
+			self.powerOn();
+		return num1 * num2;
+	}
+
+	public static double div(Calculator2 self, double num1, double num2) {
 		if (!self.isOn)
 			self.powerOn();
 		return num1 / (double) num2;
