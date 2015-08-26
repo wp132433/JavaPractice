@@ -23,4 +23,10 @@ public class Rectangle extends Figure {
     protected double calcArea() {
         return width*height;
     }
+
+    @Override
+    protected void printFigure() {
+        System.out.println("사각형 ");
+        super.printFigure();
+    }
 }

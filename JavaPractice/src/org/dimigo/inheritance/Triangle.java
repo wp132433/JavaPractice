@@ -23,4 +23,10 @@ public class Triangle extends Figure {
     protected double calcArea() {
         return width*height/2.0;
     }
+
+    @Override
+    protected void printFigure() {
+        System.out.println("삼각형 ");
+        super.printFigure();
+    }
 }

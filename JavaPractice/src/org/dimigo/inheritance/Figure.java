@@ -15,4 +15,13 @@ public class Figure {
     protected double calcArea() {
         return 0.0;
     }
+
+    protected void printFigure() {
+        System.out.println("(" + centerX + ", " + centerY + ")");
+    }
+
+    protected void moveFigure(int _x, int _y){
+        centerX += _x;
+        centerY += _y;
+    }
 }

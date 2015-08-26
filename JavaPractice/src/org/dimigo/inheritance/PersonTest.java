@@ -5,17 +5,23 @@ package org.dimigo.inheritance;
  */
 public class PersonTest {
 	public static void main(String[] args) {
-        Korean korean = new Korean();
-        Japenese japenese = new Japenese();
-        Chinese chinese = new Chinese();
+        Korean korean = new Korean("aa");
+        Japenese japenese = new Japenese("33");
+        Chinese chinese = new Chinese("Ee");
 
-        korean.sayHello();
-        korean.sayBye();
+        Person[] persons = new Person[3];
 
-        japenese.sayHello();
-        japenese.sayBye();
+        persons[0] = korean;
+        persons[1] = japenese;
+        persons[2] = chinese;
 
-        chinese.sayHello();
-        chinese.sayBye();
-	}
+        for(Person person : persons) {
+            System.out.println(person.toString());
+            hello(person);
+        }
+    }
+
+    static void hello(Person _person) {
+        _person.sayHello();
+    }
 }
