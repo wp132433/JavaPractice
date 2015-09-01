@@ -3,7 +3,7 @@ package org.dimigo.inheritance;
 /**
  * Created by WOF on 15. 8. 25..
  */
-public class SmartPhone {
+abstract class SmartPhone {
     String model;
     String company;
     int price;
@@ -25,9 +25,7 @@ public class SmartPhone {
         System.out.println(model + "off");
     }
 
-    public void pay() {
-        System.out.println("pay");
-    }
+    abstract void pay();
 
     public void useSpecialFunction() {
         if(this instanceof iPhone)
