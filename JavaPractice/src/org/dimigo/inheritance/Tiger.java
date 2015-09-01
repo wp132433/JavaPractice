@@ -5,8 +5,14 @@ package org.dimigo.inheritance;
  */
 public class Tiger extends Animal {
 
-    public Tiger(String name) {
-        super(name);
+    @Override
+    public void eat() {
+
+    }
+
+    @Override
+    public void sleep() {
+
     }
 
     @Override
