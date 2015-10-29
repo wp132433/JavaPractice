@@ -1,54 +1,88 @@
 package org.dimigo.collection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 /**
- * Created by WOF on 15. 9. 30..
+ * <pre>
+ * org.dimigo.collection
+ *   |_ MelonChart
+ * 
+ * 1. 개요 : 
+ * 2. 작성일 : 2015. 9. 26.
+ * </pre>
+ *
+ * @author		: 이름
+ * @version		: 1.0
  */
 public class MelonChart {
-    public static void main(String[] args) {
-        Map<String, List<Music>> map = new HashMap<>();
 
-        List<Music> b = new ArrayList<Music>();
-        b.add(new Music("내 첫사랑", "베리굿"));
-        b.add(new Music("또 다시 사랑", "임창정"));
-        b.add(new Music("부산에 가면", "박진영"));
+	private static final String APP_KEY = "4ce8bb31-9934-376b-8a64-0b5922ad9f71";
+	private static final String MELON_OPEN_URL = "http://apis.skplanetx.com/melon/charts/realtime?";	
+	private static final String QUERY_STRING = "count=10&page=1&version=1";
+	
+	public static void main(String[] args) {		
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		
+	    try {
+	    	HttpGet httpget = new HttpGet(MELON_OPEN_URL + QUERY_STRING);
+	        
+	        httpget.setHeader("appKey", APP_KEY);
+	        
+	        System.out.println("Executing request : " + httpget.getRequestLine());
 
-        List<Music> d = new ArrayList<Music>();
-        d.add(new Music("커피", "유재환,김예림"));
-        d.add(new Music("다 잘될거야", "쿨"));
+	        // Create a custom response handler
+	        ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+	            @Override
+	            public String handleResponse(
+	                    final HttpResponse response) throws ClientProtocolException, IOException {
+	                int status = response.getStatusLine().getStatusCode();
+	                if (status >= 200 && status < 300) {
+	                    HttpEntity entity = response.getEntity();
+	                    return entity != null ? EntityUtils.toString(entity) : null;
+	                } else {
+	                    throw new ClientProtocolException("Unexpected response status: " + status);
+	                }
+	            }
 
-        map.put("발라드", b);
-        map.put("댄스", d);
+	        };
+	        
+	        String responseBody = httpclient.execute(httpget, responseHandler);
+	        System.out.println("------------------------------------------------");
+	        System.out.println(responseBody);
+	        
+	        Melon melon = MelonChartJSONParser.parse(responseBody);
+	        System.out.println(melon);
 
-        System.out.println("-------- << 멜론 장르별 챠트 >> --------");
-        printList(map);
+            List<Song> songs = melon.getSongs();
 
-        System.out.println("-------- << 발라드 3위 곡 변경 >> --------");
-        map.get("발라드").set(2, new Music("지우고 지워도", "차수경"));
-        printList(map);
-
-        System.out.println("-------- << 발라드 1위 곡 삭제 >> --------");
-        map.get("발라드").remove(0);
-        printList(map);
-
-        System.out.println("-------- << 전체 리스트 삭제 >> --------");
-        map.remove("발라드");
-        map.remove("댄스");
-        printList(map);
-    }
-
-    public static void printList(Map<String, List<Music>> map) {
-        for(String key : map.keySet()) {
-            System.out.println("[" + key + "]");
-            for(int i = 0;i < map.get(key).size();i++) {
-                System.out.print((i + 1) + ". ");
-                System.out.println(map.get(key).get(i));
+            int index = 1;
+            for(Song song : songs) {
+                System.out.print(index + ". " + song.getSongName() + " - ");
+                for(Artist artist : song.getArtists())
+                    System.out.print(artist.getArtistName() + ", ");
+                System.out.println();
+                index++;
             }
-        }
-        System.out.println();
-    }
+	    } catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+	        try {
+				httpclient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	    }
+
+	}
+
 }
