@@ -37,7 +37,7 @@ public class vv {
 
         BufferedReader br = new BufferedReader(new FileReader(file));
 
-        int result = 0;
+        int result = 1;
 
         while(br.readLine() != null)
             result += 1;
